@@ -14,6 +14,7 @@ pub const NUM_RXD: i32 = 128;
 pub const NUM_TXD: i32 = 128;
 
 /// Read a TOML stub and figure out the port.
+// 生成端口配置，用于端口初始化
 fn read_port(value: &Value) -> Result<PortConfiguration> {
     if let Value::Table(ref port_def) = *value {
         let name = match port_def.get("name") {

@@ -37,7 +37,7 @@ macro_rules! write_or_return {
     }
 }
 
-
+// 打印TCP数据包头
 impl fmt::Display for TcpHeader {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write_or_return!(f,
@@ -59,7 +59,7 @@ impl fmt::Display for TcpHeader {
 
     }
 }
-
+// 查找payload
 impl EndOffset for TcpHeader {
     type PreviousHeader = IpHeader;
 
@@ -83,7 +83,7 @@ impl EndOffset for TcpHeader {
         true
     }
 }
-
+// TCP数据包头的类
 impl TcpHeader {
     #[inline]
     pub fn new() -> TcpHeader {

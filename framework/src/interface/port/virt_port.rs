@@ -37,6 +37,7 @@ impl PacketTx for VirtualQueue {
     }
 }
 
+// 徐你队列的接收
 impl PacketRx for VirtualQueue {
     /// Send a batch of packets out this PortQueue. Note this method is internal to NetBricks (should not be directly
     /// called).

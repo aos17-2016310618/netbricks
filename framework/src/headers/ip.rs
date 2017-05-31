@@ -9,6 +9,7 @@ use std::slice;
 use utils::Flow;
 
 /// IP header using SSE
+// 针对IPv4的解析流程
 #[derive(Debug, Default)]
 #[repr(C,packed)]
 pub struct IpHeader {
@@ -19,6 +20,7 @@ pub struct IpHeader {
     dst_ip: u32,
 }
 
+// 打印IPv4首部信息
 impl fmt::Display for IpHeader {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let src = Ipv4Addr::from(self.src());
@@ -64,8 +66,10 @@ impl EndOffset for IpHeader {
     }
 }
 
+// IP 头部相关的类
 impl IpHeader {
     #[inline]
+    // 根据一个数据包生成流
     pub fn flow(&self) -> Option<Flow> {
         let protocol = self.protocol();
         let src_ip = self.src();

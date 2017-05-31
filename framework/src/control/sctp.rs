@@ -11,6 +11,8 @@ use std::net::{SocketAddr, ToSocketAddrs};
 use std::os::unix::io::AsRawFd;
 
 
+// 基于SCTP的控制端口
+
 pub trait SctpControlAgent {
     fn new(address: SocketAddr, stream: SctpStream, scheduler: IOScheduler) -> Self;
     fn handle_read_ready(&mut self) -> bool;

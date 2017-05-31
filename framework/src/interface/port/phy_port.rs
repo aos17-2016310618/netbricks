@@ -14,6 +14,7 @@ use std::sync::atomic::Ordering;
 
 /// A DPDK based PMD port. Send and receive should not be called directly on this structure but on the port queue
 /// structure instead.
+/// 以太网卡
 pub struct PmdPort {
     connected: bool,
     should_close: bool,
@@ -26,6 +27,7 @@ pub struct PmdPort {
 
 /// A port queue represents a single queue for a physical port, and should be used to send and receive data.
 #[derive(Clone)]
+// 端口队列
 pub struct PortQueue {
     // The Arc cost here should not affect anything, since we are really not doing anything to make it go in and out of
     // scope.
@@ -37,6 +39,7 @@ pub struct PortQueue {
     rxq: i32,
 }
 
+// 丢包
 impl Drop for PmdPort {
     fn drop(&mut self) {
         if self.connected && self.should_close {
@@ -60,6 +63,7 @@ impl fmt::Display for PortQueue {
 }
 
 /// Represents a single RX/TX queue pair for a port. This is what is needed to send or receive traffic.
+//物理端口队列
 impl PortQueue {
     #[inline]
     fn send_queue(&self, queue: i32, pkts: *mut *mut MBuf, to_send: i32) -> Result<u32> {
@@ -90,6 +94,7 @@ impl PortQueue {
     }
 }
 
+// 出书队列
 impl PacketTx for PortQueue {
     /// Send a batch of packets out this PortQueue. Note this method is internal to NetBricks (should not be directly
     /// called).
@@ -101,6 +106,7 @@ impl PacketTx for PortQueue {
     }
 }
 
+// 接收队列
 impl PacketRx for PortQueue {
     /// Receive a batch of packets out this PortQueue. Note this method is internal to NetBricks (should not be directly
     /// called).
@@ -122,6 +128,7 @@ fn i32_from_bool(x: bool) -> i32 {
     }
 }
 
+// 轮训端口
 impl PmdPort {
     /// Determine the number of ports in a system.
     pub fn num_pmd_ports() -> i32 {
